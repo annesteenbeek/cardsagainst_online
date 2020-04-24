@@ -13,13 +13,18 @@ const Player = require('./player');
 const Game = require('./game');
 const c = require('./constants');
 
+const public_folder = process.env.PUBLIC || __dirname + "/../../frontend/dist/";
+log.info("public folder: " + public_folder);
+
 if (process.env.NODE_ENV === 'production') {
-    app.use('/', express.static(process.env.PUBLIC || __dirname + "/../../frontend/dist/"))
+    app.use('/', express.static(public_folder))
 }
 
 const PORT = process.env.PORT || c.SOCKET_PORT
-http.listen(PORT);
-log.info("Listening on port: " + PORT)
+const HOST = '0.0.0.0'
+http.listen(PORT, HOST);
+log.info(`Running on http://${HOST}:${PORT}`);
+
 
 
 var clients = new Map();

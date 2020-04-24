@@ -1,0 +1,5 @@
+.git
+*DOCKERFILE*
+node_modules
+dist
+*.log
