@@ -18,7 +18,7 @@
           label="Player Name"/>
         
         <div class="row justify-center">
-          <q-btn label="Create" type="submit" color="primary"/>
+          <q-btn label="Submit" type="submit" color="primary"/>
         </div>
       </q-form>
       </q-card>

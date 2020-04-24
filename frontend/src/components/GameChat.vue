@@ -4,6 +4,7 @@
     <div class="q-pa-md">
       <div v-for="(msg, index) in chat_messages" :key="index">
         <q-chat-message
+          class="animated pulse"
           :name="is_sent(msg.id) ? 'You' : msg.name"
           text-sanitize
           name-sanitize

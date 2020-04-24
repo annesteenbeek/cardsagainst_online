@@ -5,6 +5,7 @@
       <!-- <transition appear enter-active-class="animated slideInLeft" -->
     <!-- leave-active-class="animated slideOutRight" :duration="1000"> -->
       <GameCard
+        class="animated flipInY"
         v-bind:black="true"
         :key="black_card.text"
         v-bind:text="black_card.text"
@@ -68,6 +69,8 @@
 
     </div>
 
+    <q-separator inset />
+
     <!-- Mobile -->
       <div v-if="$q.platform.is.mobile">
         <q-scroll-area
@@ -77,6 +80,7 @@
           
         <div class="row no-wrap q-pa-md q-gutter-md">
 
+          <!-- Czar selecting cards -->
         <template v-if="match_state === 'czar_selecting'">
           <div v-for="(cards, index) in played_cards" :key="index">
             <div v-for="(text, j) in cards" :key="j">
@@ -90,6 +94,7 @@
           </div>
         </template>
   
+        <!-- Hand picking cards -->
         <template v-else>
           <GameCard 
             v-for="(text, index) in hand_cards"
@@ -274,8 +279,10 @@ export default {
     }
   },
   beforeDestroy() {
-    this.$socket.$unsubscribe('request_cards');
-    this.$socket.$unsubscribe('select_winner');
+    // TODO: bug unsubscribe not available
+    // https://github.com/probil/vue-socket.io-extended/issues/431
+    // this.$socket.$unsubscribe('request_cards');
+    // this.$socket.$unsubscribe('select_winner');
   }
 
 }

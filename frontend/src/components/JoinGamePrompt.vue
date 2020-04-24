@@ -28,7 +28,7 @@
         </q-input>
 
         <div>
-          <q-btn label="Submit" type="submit" color="primary"/>
+          <q-btn label="Join" type="submit" color="primary"/>
         </div>
       </q-form>
       </q-card>

@@ -1,9 +1,16 @@
 <template>
-  <div>
-    <div v-resize-text class="text-h2">
-      Cards against humanity Online
+  <div class="col q-gutter-md">
+    <div class="row justify-center" style="text-align: center">
+      <div v-resize-text="{maxFontSize: '90px'}"
+        class="row text-h2 q-pa-md" >
+        Cards against humanity <br>
+      </div>
+      <div class="text-subtitle1">
+        Online
+      </div>
     </div>
-    <div class="q-pa-md">
+   <q-separator class="q-m-sm" color="grey" inset />
+    <div class="row q-pa-md justify-center">
         <q-table
           title="Available games"
           :data="table.data"
@@ -13,19 +20,28 @@
           virtual-scroll
           dense
           no-data-label="No games available yet, create one!"
-          style="height: 100%"
+          style="height: 100%; width: 400px"
         >
         <template v-slot:top>
           <q-btn color="primary" icon="far fa-plus-square" label="New Game" @click="showCreatePrompt = true" />
           <q-space />
        </template>
 
-
-        <template v-slot:body-cell-actions="props">
-          <q-td :props="props">
+       <template v-slot:body="props">
+         <q-tr :props="props">
+           <q-td key="game_name" :props="props">
+             {{ props.row.game_name }} 
+             <q-icon v-if="props.row.has_password" name="fas fa-lock" />
+           </q-td>
+           <q-td key="players" :props="props">
+             {{ props.row.players }} / {{ props.row.max_players }}
+           </q-td>
+           <q-td key="actions" :props="props">
             <q-btn dense round flat color="green" @click="joinGame(props.row.game_id)" icon="fas fa-play"/>
-          </q-td>          
-        </template> 
+           </q-td>
+         </q-tr>
+       </template>
+
       </q-table>
     </div>
     <CreateGamePrompt v-model="showCreatePrompt" />
@@ -87,7 +103,6 @@ export default {
             sortable: true
           },
           { name: 'players', label: 'Players', field: 'players' },
-          { name: 'password', label: 'Password Protected', field: 'has_password' },
           { name: 'actions', label: 'Join', field: '', align:'center' },
         ],
         data: this.$store.state.games

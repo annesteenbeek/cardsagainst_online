@@ -161,7 +161,8 @@ export default new Vuex.Store({
         commit('CHAT_HISTORY', chat_history);
       },
       socket_emitMessage({dispatch, commit}, message) {
-        commit('NEW_MESSAGE', DOMPurify.sanitize(message));
+        message.text = DOMPurify.sanitize(message.text)
+        commit('NEW_MESSAGE', message);
       },
   }
 })

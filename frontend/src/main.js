@@ -11,7 +11,13 @@ import VueResizeText from 'vue-resize-text';
 
 Vue.config.productionTip = false
 
-const socket = io();
+var url = window.location;
+if (process.env.NODE_ENV === 'development') {
+  url = "http://localhost:8000";
+}
+
+const socket = io(url);
+
 Vue.use(VueResizeText);
 Vue.use(ModalDialogs);
 Vue.use(VueSocketIOExt, socket, {store});
