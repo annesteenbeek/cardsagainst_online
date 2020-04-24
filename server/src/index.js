@@ -14,10 +14,12 @@ const Game = require('./game');
 const c = require('./constants');
 
 if (process.env.NODE_ENV === 'production') {
-    app.use('/', express.static("/home/anne/src/cardsagainst_online/frontend/dist/"))
+    app.use('/', express.static(process.env.PUBLIC || __dirname + "/../../frontend/dist/"))
 }
 
-http.listen(c.SOCKET_PORT);
+const PORT = process.env.PORT || c.SOCKET_PORT
+http.listen(PORT);
+log.info("Listening on port: " + PORT)
 
 
 var clients = new Map();
@@ -90,12 +92,18 @@ server.on(c.CONNECTION, (socket) => {
             callback({success: true});
         } else if (player.in_game !== "") {
             log.error("player tried to join game while already in another game")
-            callback({success: false, error: "Already in game"});
-        } else if (game.password === data.password) {
-           game.join(player); 
-           callback({success: true});
+            callback({success: false, error: "Already in another game"});
+        } else if (game.started) {
+            callback({success: false, error: "Game has already started, wait for match to finish."})
+        } else if (game.players.size >= game.max_players) {
+            callback({success: false, error: "Game is full"})
         } else {
-            callback({success: false, error: "incorrect password"});
+            if (game.password === data.password) {
+                game.join(player); 
+                callback({success: true});
+            } else {
+                callback({success: false, error: "incorrect password"});
+            }
         }
     })
 

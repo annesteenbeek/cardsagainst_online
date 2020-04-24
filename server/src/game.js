@@ -49,7 +49,8 @@ class Game extends EventEmitter {
             game_name: this.game_name,
             players  : this.players.size,
             started  : this.started,
-            has_password: this.password !== ""
+            has_password: this.password !== "",
+            max_players : this.max_players,
         }
     }
 
@@ -110,7 +111,7 @@ class Game extends EventEmitter {
 
         player.socket.on(c.NEW_MESSAGE, (text) => {
             text = text + '';
-            text = validator.trim(text);
+            text = sanitize.trim(text);
             if (text.length < 1) {
                 return
             }
