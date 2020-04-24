@@ -13,7 +13,7 @@ The game is designed to be both desktop and mobile friendly and supports chat, w
 
 
 ### Desktop view
-![Desktop screenshot](/screenshots/desktop.)
+![Desktop screenshot](/screenshots/desktop.png)
 ### Mobile view
 ![Mobile screenshot](/screenshots/mobile.png)
 
