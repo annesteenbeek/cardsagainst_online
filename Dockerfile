@@ -2,9 +2,13 @@ FROM node:12-alpine
 
 WORKDIR /home/node/
 
-USER node
 COPY frontend /home/node/frontend
 RUN chown -R node:node /home/node/frontend
+
+COPY server /home/node/server
+RUN chown -R node:node /home/node/server
+
+USER node
 
 # Build frontend and move dist
 RUN cd frontend && \
@@ -15,8 +19,6 @@ RUN cd frontend && \
 RUN mv frontend/dist/ /home/node/public/ && \
     rm -R /home/node/frontend
 
-COPY server /home/node/server
-RUN chown -R node:node /home/node/server
 RUN cd server && \
     npm install --production
 
