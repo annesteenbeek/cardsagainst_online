@@ -12,7 +12,9 @@ The best description about the game is given by it's creators:
 The game is designed to be both desktop and mobile friendly and supports chat, where you can have nice and friendly conversations.
 
 
-![Desktop screenshot](/screenshots/desktop.png)
+### Desktop view
+![Desktop screenshot](/screenshots/desktop.)
+### Mobile view
 ![Mobile screenshot](/screenshots/mobile.png)
 
 ## Description
