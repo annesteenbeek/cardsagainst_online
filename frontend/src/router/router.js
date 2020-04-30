@@ -57,6 +57,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  base: 'process.env.PUBLIC_PATH',
   routes
 })
 

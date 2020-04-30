@@ -14,10 +14,11 @@ const Game = require('./game');
 const c = require('./constants');
 
 const public_folder = process.env.PUBLIC || __dirname + "/../../frontend/dist/";
+const NODE_PATH = process.env.NODE_PATH || "/";
 log.info("public folder: " + public_folder);
 
 if (process.env.NODE_ENV === 'production') {
-    app.use('/', express.static(public_folder))
+    app.use(NODE_PATH, express.static(public_folder))
 }
 
 const PORT = process.env.PORT || c.SOCKET_PORT

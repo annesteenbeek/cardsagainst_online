@@ -1,5 +1,5 @@
 module.exports = Object.freeze({
-    SOCKET_PORT: 8000,
+    SOCKET_PORT: 8003,
     DISCONNECT_TIMEOUT: 30000,
 
     PLAYER_EVENTS: {
