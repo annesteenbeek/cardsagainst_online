@@ -13,10 +13,6 @@ class Game extends EventEmitter {
         this.game_name = game_name;
 
         // default game settings
-        this.nwildcards  = 0;
-        this.max_players = 10;
-        this.win_score   = 10;
-        this.round_time  = 10;
         this.decks       = [card_manager.decks.order[0]]; // list of abbreviations
 
         this.players     = new Set();     // game host could be index 0
@@ -33,10 +29,10 @@ class Game extends EventEmitter {
         this.room    = server.sockets.to(this.game_id);
 
         this.game_settings = {
-            nwildcards: this.nwildcards,
-            max_players: this.max_players,
-            win_score: this.win_score,
-            round_time: this.round_time,
+            nwildcards: 0,
+            max_players: 10,
+            win_score: 10,
+            round_time: 30,
             decks: this.decks
         }
 
@@ -93,7 +89,6 @@ class Game extends EventEmitter {
 
         player.socket.on(c.GAME_SETTINGS, (new_settings) => {
             for (let [key, value] of Object.entries(new_settings)) {
-                console.log("key: " +key +" value: " + value)
                 if(key === 'win_score') {
                     if (value > 0 && value < 99) {
                         this.game_settings[key] = value;
@@ -176,7 +171,7 @@ class Game extends EventEmitter {
             return true 
         }
         this.players.forEach((player) => {
-            if (player.score >= this.win_score){
+            if (player.score >= this.game_settings.win_score){
                 this.room.emit(c.GAME_WINNER, player.name);
                 this.game_state = c.GAME_STATES.LOBBY;
                 this.emit_game_state()
@@ -239,7 +234,7 @@ class Game extends EventEmitter {
                             player.state = c.PLAYER_STATES.NO_PICK; // or too late
                             this.emit_game_state(); // broadcast that player is done
                             resolve()
-                        }, this.round_time*1000);
+                        }, this.game_settings.round_time*1000);
                         player.state = c.PLAYER_STATES.PICKING;
 
                         player.socket.emit(c.REQUEST_CARDS, (hand_index) => {
@@ -284,7 +279,7 @@ class Game extends EventEmitter {
             let czar_promise = new Promise((resolve, reject) => {
                 let wait = setTimeout(() => {
                     reject("Czar didnt respond in time.");
-                }, this.round_time*1000);
+                }, this.game_settings.round_time*1000);
 
                 czar.socket.emit(c.CZAR_SELECT, (win_index) => {
                     if (win_index >= 0 && win_index < played_cards.length) {

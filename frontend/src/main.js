@@ -13,10 +13,12 @@ Vue.config.productionTip = false
 
 var url = window.location;
 if (process.env.NODE_ENV === 'development') {
-  url = "http://localhost:8000";
+  url = "http://localhost:8003";
 }
 
-const socket = io(url);
+// TODO: fix url in production
+// const socket = io(url);
+const socket = io();
 
 Vue.use(VueResizeText);
 Vue.use(ModalDialogs);
